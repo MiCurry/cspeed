@@ -1,13 +1,22 @@
 program solver
 
-use cspeed
+use iso_c_binding, only : c_float, c_int
 
 implicit none
 
-real :: cpuSpeed
+interface
+    real(c_float) function cspeed(polls) BIND(C)
+        use iso_c_binding, only : c_float, c_int
+        integer(c_int) :: polls
+    end function cspeed
+end interface
 
-cpuSpeed = speed()
+real (c_float) :: clockSpeed
+integer (c_int) :: polls
 
-write(0, *) "CPU Speed:", cpuSpeed
+clockSpeed = cspeed(1)
+write(0, *) "CPU Speed:", clockSpeed
+
+
 
 end program solver
